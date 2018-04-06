@@ -60,14 +60,14 @@ public class Main {
 				// Get the pattern that will be searched for by prompting the user
 				System.out.println("Enter the pattern to look for:");
 				String pattern  = scanIn.nextLine();
-				System.out.println(pattern);
+				//System.out.println(pattern);
 				scanIn.close();
 
 				// Create an array of search jobs
 				SearchJob[] jobs = new SearchJob[filesList.size()];
 				for (int i = 0; i < jobs.length; i++) {
 					jobs[i] = new SearchJob(filesList.get(i));
-					System.out.println(filesList.get(i));
+					//System.out.println(filesList.get(i));
 				}
 
 				//Exercise 1: One search thread per file
@@ -81,7 +81,7 @@ public class Main {
 					for (int i = 0; i < jobs.length; i++) {
 						a_searchTasks[i] = new SearchTask(g, jobs[i], pattern);
 						a_searchTasks[i].start();
-						System.out.println(g.activeCount());
+						//System.out.println(g.activeCount());
 
 					}
 				}
@@ -91,17 +91,19 @@ public class Main {
 					ThreadGroup g = new ThreadGroup("thread group");
 					SearchTask[] a_searchTasks = new SearchTask[4];
 
-
 					//Instantiate and start the first four threads
 					for (int j = 0; j < 4; j++) {
 						a_searchTasks[j] = new SearchTask(g, jobs[j], pattern);
 						a_searchTasks[j].start();
 					}
-					int i = 4;
+
+					int i = 4; //Keeps track of the next job to add
+
 					//Check if the four running threads are complete
 					while(i <= jobs.length - 4){
 						if(g.activeCount() < 1){
-							System.out.println("number of active threads:" + g.activeCount());
+							//System.out.println("number of active threads:" + g.activeCount());
+
 							//Add the next four jobs to the threads
 							for (int j = 0; j < 4; j++){
 								a_searchTasks[j] = new SearchTask(g, jobs[i++], pattern);
